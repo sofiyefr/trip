@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, redirect, request
 from app.models.city_model import City
 from app.extensions import db
 
@@ -43,7 +43,17 @@ def list():
         <td><input type="text" name="longitude" value="0"></td>
         <td><input type="submit" value="Add"></td>
         </form>
+    </tr>
     """
+
+    for city in City.query.all():
+        print(city.id, city.name, city.latitude, city.longitude)
+
+    msg = request.args.get("msg")
+    if (msg):
+        msg = f"{msg}<br>"
+    else:
+        msg = ""
 
     return f'''
     List of cities: <br>
@@ -51,6 +61,7 @@ def list():
     {list}
     {add_city}
     </table> <br>
+    {msg}
     <a href="/">Go back </a><br>
     <a href="/cities_as_json">Get cities as JSON</a><br>
     '''
@@ -65,7 +76,7 @@ def add():
     db.session.add(city)
     db.session.commit()
     
-    return f'City {name} added successfully! <br>' + list()
+    return redirect("cities")
 
 
 @city_bp.route("/edit_city", methods=["POST", "GET"])
@@ -81,9 +92,9 @@ def edit():
         city.latitude = latitude
         city.longitude = longitude
         db.session.commit()
-        return f'City {name} updated successfully! <br>' + list()
+        return redirect("cities")
     else:
-        return f'City with ID {id} not found! <br>' + list()
+        return f'City with ID {id} not found! <br>'
 
 @city_bp.route("/delete_city", methods=["POST", "GET"])
 def delete():
@@ -92,9 +103,9 @@ def delete():
     if city:
         db.session.delete(city)
         db.session.commit()
-        return f'City {city.name} deleted successfully! <br>' + list()
+        return redirect("cities")
     else:
-        return f'City with ID {id} not found! <br>' + list()
+        return f'City with ID {id} not found! <br>'
     
 @city_bp.route("/copy_city", methods=["POST", "GET"])
 def copy():
@@ -104,9 +115,9 @@ def copy():
         new_city = City(name=city.name, latitude=city.latitude, longitude=city.longitude)
         db.session.add(new_city)
         db.session.commit()
-        return f'City {city.name} copied successfully! <br>' + list()
+        return redirect("cities")
     else:
-        return f'City with ID {id} not found! <br>' + list()
+        return f'City with ID {id} not found! <br>'
 
     
 @city_bp.route("/cities_as_json")
