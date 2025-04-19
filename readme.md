@@ -55,7 +55,7 @@
 ```
 travel-planner/
 │
-├── client/                        # Frontend (React or Vue)
+├── client/                        # Frontend (plain js)
 │   ├── public/
 │   ├── src/
 │   │   ├── components/            # Reusable UI components
@@ -89,8 +89,8 @@ travel-planner/
 
 ### Phase 1: Environment Setup
 - Initialize Git repository
-- Setup frontend (React/Vue) and backend (Flask or Django)
-- Configure PostgreSQL and connect to backend
+- Setup frontend (plain js) and backend (Flask)
+- Configure sqlite and connect to backend
 - Setup routing between frontend and backend
 
 ### Phase 2: Core Functionalities
