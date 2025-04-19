@@ -1,6 +1,4 @@
-from flask import Blueprint, request
-from app.models.city_model import City
-from app.extensions import db
+from flask import Blueprint
 
 home_bp = Blueprint('home', __name__)
 

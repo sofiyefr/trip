@@ -6,7 +6,6 @@ city_bp = Blueprint('city', __name__)
 
 @city_bp.route("/cities")
 def list():
-
     list = "".join([
         f'''
         <tr>
@@ -52,7 +51,8 @@ def list():
     {list}
     {add_city}
     </table> <br>
-    <a href="/">Go back </a>
+    <a href="/">Go back </a><br>
+    <a href="/cities_as_json">Get cities as JSON</a><br>
     '''
 
 @city_bp.route("/add_city", methods=["POST", "GET"])
@@ -108,3 +108,11 @@ def copy():
     else:
         return f'City with ID {id} not found! <br>' + list()
 
+    
+@city_bp.route("/cities_as_json")
+def as_json():
+    list = ",".join([
+        f'{{"id"={city.id}, "name"="{city.name}", "latitude"={city.latitude}, "longitude"={city.longitude}}}'
+        for city in City.query.all()
+    ])
+    return f'{{"cities":[{list}]}}'

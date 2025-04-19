@@ -1,5 +1,5 @@
 from flask import Flask
-from backend.app.routes.home import home_bp
+from app.routes.home import home_bp
 from app.routes.city import city_bp
 from flask_sqlalchemy import SQLAlchemy
 from app.extensions import db  
