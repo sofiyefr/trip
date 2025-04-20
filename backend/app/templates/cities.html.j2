@@ -1,0 +1,42 @@
+<html>
+
+<body>
+    <h1>Cities editor</h1>
+
+    <table>
+        {% for city in cities %}
+        <tr>
+            <td>{{city.id}}</td>
+            <form action="city/{{city.id}}/edit">
+                <td><input type="text" name="name" value="{{city.name}}"></td>
+                <td><input type="text" name="latitude" value="{{city.latitude}}"></td>
+                <td><input type="text" name="longitude" value="{{city.longitude}}"></td>
+                <td><input type="submit" value="Update"></td>
+            </form>
+            <form action="city/{{id}}/delete">
+                <td><input type="submit" value="Delete"></td>
+            </form>
+            <td> <a href="https://www.google.com/maps?q={{city.latitude}},{{city.longitude}}" target="_blank">
+                    {{city.latitude}},{{city.longitude}}</a></td>
+            <td><a href="https://www.google.com/maps?q={{city.name}}" target="_blank">
+                    {{city.name}}</a></td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <td></td>
+            <form action="city/add">
+                <td><input type="text" name="name" value="name"></td>
+                <td><input type="text" name="latitude" value="0"></td>
+                <td><input type="text" name="longitude" value="0"></td>
+                <td><input type="submit" value="Add"></td>
+            </form>
+        </tr>
+    </table>
+    <br>
+    <a href="/">Go back </a><br>
+    <a href="/cities_as_json">Get cities as JSON</a><br>
+
+</body>
+
+</html>

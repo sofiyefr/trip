@@ -1,0 +1,25 @@
+<html>
+
+<body>
+    <h1>Route #{{route.id}}: {{route.name}}</h1>
+
+    <form action="/route/{{route.id}}/edit">
+        <input type="text" name="name" value="{{route.name}}"><br>
+        <input type="text" name="description" value="{{route.description}}"><br>
+        <input type="text" name="transport" value="{{route.transport}}"><br>
+        <input type="text" name="from_city" value="{{route.from_city}}"><br>
+        <input type="text" name="from_date" value="{{route.from_date}}"><br>
+        <input type="text" name="to_city" value="{{route.to_city}}"><br>
+        <input type="text" name="to_date" value="{{route.to_date}}"><br>
+        <input type="submit" value="Update">
+    </form>
+    <br>
+    <a href="/route/{{route.id}}/delete">Delete</a><br>
+    <p>
+        <a href="/routes">Routes </a> |
+        <a href="/">Home </a><br>
+    </p>
+
+</body>
+
+</html>

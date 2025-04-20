@@ -1,0 +1,31 @@
+<html>
+
+<body>
+    <h1>Root Routes</h1>
+
+    <table>
+        {% for route in routes %}
+        <tr>
+            <td>
+                <a href="/route/{{route.id}}">#{{route.id}}: {{route.name}}</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <form action="/route/add">
+                <td><input type="text" name="name" value="name"></td>
+                <td><input type="hidden" name="description" value=""></td>
+                <td><input type="hidden" name="transport" value=""></td>
+                <td><input type="hidden" name="from_date" value=""></td>
+                <td><input type="hidden" name="to_date" value=""></td>
+                <td><input type="submit" value="Add"></td>
+            </form>
+        </tr>
+    </table>
+    <br>
+    <a href="/">Go back </a><br>
+
+</body>
+
+</html>

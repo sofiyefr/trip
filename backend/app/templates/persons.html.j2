@@ -1,0 +1,38 @@
+<html>
+
+<body>
+    <h1>Persons editor</h1>
+
+    <table>
+        {% for person in persons %}
+        <tr>
+            <td>{{person.id}}</td>
+            <form action=person/{{person.id}}/edit>
+                <td><input type="text" name="name" value="{{person.name}}"></td>
+                <td><input type="text" name="birthday" value="{{person.birthday}}"></td>
+                <td><input type="submit" value="Update"></td>
+            </form>
+            <form action="person/{{person.id}}/delete">
+                <td>
+                    <input type="submit" value="Delete">
+                </td>
+            </form>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <td></td>
+            <form action="person/add">
+                <td><input type="text" name="name" value="name"></td>
+                <td><input type="text" name="birthday" value="birthday"></td>
+                <td><input type="submit" value="Add"></td>
+            </form>
+        </tr>
+    </table>
+    <br>
+    <a href="/">Go back </a><br>
+    <a href="/persons_as_json">Get persons as JSON</a><br>
+
+</body>
+
+</html>

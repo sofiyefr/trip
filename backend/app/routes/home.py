@@ -1,10 +1,7 @@
-from flask import Blueprint
+from flask import Blueprint, redirect, url_for
 
 home_bp = Blueprint('home', __name__)
 
 @home_bp.route("/")
 def home():
-    return """
-    Hello from the trip planner backend! 
-    <a href="/cities">cities </a><br>
-    """
+    return redirect(url_for("static", filename="index.html"))
