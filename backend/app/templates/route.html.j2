@@ -5,13 +5,49 @@
 
     <form action="/route/{{route.id}}/edit">
         <input type="text" name="name" value="{{route.name}}"><br>
-        <input type="text" name="description" value="{{route.description}}"><br>
-        <input type="text" name="transport" value="{{route.transport}}"><br>
-        <input type="text" name="from_city" value="{{route.from_city}}"><br>
-        <input type="text" name="from_date" value="{{route.from_date}}"><br>
-        <input type="text" name="to_city" value="{{route.to_city}}"><br>
-        <input type="text" name="to_date" value="{{route.to_date}}"><br>
+        <textarea name="description">{{route.description}}</textarea><br>
         <input type="submit" value="Update">
+    </form>
+
+    {% for checkpoint in checkpoints %}
+    <form action="/checkpoint/{{checkpoint.id}}/edit">
+        <select name="city_id">
+            {% for city in cities %}
+            {% if city.id==checkpoint.city_id %}
+            <option value="{{city.id}}" selected>{{city.name}}</option>
+            {% else %}
+            <option value="{{city.id}}">{{city.name}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <input type="date" name="from_date" value="{{checkpoint.from_date}}">-
+        <input type="date" name="to_date" value="{{checkpoint.to_date}}"><br>
+        <input type="text" name="transport" value="{{checkpoint.transport}}"><br>
+        <textarea name="description">{{checkpoint.description}}</textarea><br>
+        <input type="submit" value="Update">
+        <a href="/checkpoint/{{checkpoint.id}}/delete">delete</a>
+    </form>
+    {% endfor %}
+
+    <form action="/checkpoint/add">
+        <input type="hidden" name="route_id" value="{{route.id}}">
+        <select name="city_id">
+            <option value="">--select city--</option>
+            {% for city in cities %}
+            <option value="{{city.id}}">{{city.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="date" name="date" value=""><br>
+        <select name="transport">
+            <option value="">--select transport--</option>
+            <option>car</option>
+            <option>bus</option>
+            <option>plane</option>
+            <option>train</option>
+            <option>ship</option>
+        </select>
+        <input type="hidden" name="description" value="">
+        <input type="submit" value="Add">
     </form>
     <br>
     <a href="/route/{{route.id}}/delete">Delete</a><br>
