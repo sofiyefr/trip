@@ -103,7 +103,7 @@
                     title: '{{checkpoint.city.name}}',
                     start: '{{checkpoint.from_date}}',
                     end: '{{checkpoint.to_date}}',
-                    color: colors[{{ loop.index0 % 7 }}% length(colors)], // Use a different color for each event
+                    color: colors[{{ loop.index0 % 7 }}], // Use a different color for each event
                 },
                 {% endfor %}
             ]
