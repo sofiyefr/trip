@@ -13,7 +13,7 @@
                 <td><input type="text" name="longitude" value="{{city.longitude}}"></td>
                 <td><input type="submit" value="Update"></td>
             </form>
-            <form action="city/{{id}}/delete">
+            <form action="city/{{city.id}}/delete">
                 <td><input type="submit" value="Delete"></td>
             </form>
             <td> <a href="https://www.google.com/maps?q={{city.latitude}},{{city.longitude}}" target="_blank">
