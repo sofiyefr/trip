@@ -1,0 +1,178 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+h1,
+h2 {
+    color: #444;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Form styles */
+form {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form input[type="text"],
+form input[type="date"],
+form select,
+form textarea {
+    width: 30%;
+    padding: 8px;
+    margin: 5px 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form input[type="submit"] {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.delete-link {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.delete-link:hover {
+    color: #a71d2a;
+}
+
+/* Checkpoints styles */
+.checkpoints {
+    margin-top: 20px;
+}
+
+.checkpoint {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.checkpoint:hover {
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.1);
+    background: #444;
+    border-color: #666;
+}
+
+
+.checkpoint h2 {
+    margin-top: 0;
+}
+
+/* Navigation links */
+p a {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1), -4px -4px 8px rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+}
+
+p a:hover {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1), inset -2px -2px 4px rgba(255, 255, 255, 0.7);
+    color: #0056b3;
+}
+
+/* Dark theme adjustments */
+body {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+}
+
+form {
+    background: #3a3a3a;
+    border: 1px solid #555;
+}
+
+form input[type="text"],
+form input[type="date"],
+form select,
+form textarea {
+    border: 1px solid #555;
+    background-color: #444;
+    color: #e0e0e0;
+}
+
+form select {
+    width: 30%;
+    /* Make dropdowns thinner */
+}
+
+form input[type="submit"] {
+    background-color: #0056b3;
+}
+
+form input[type="submit"]:hover {
+    background-color: #003f7f;
+}
+
+.checkpoint {
+    background: #3a3a3a;
+    border: 1px solid #555;
+}
+
+h1,
+h2 {
+    color: #ffb6c1;
+    /* Light pink color for captions */
+}
+/* Date control styles */
+.date-label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.date-input {
+    width: 30%;
+    padding: 5px;
+    border: 10px solid #555;
+    border-radius: 4px;
+    background-color: #444;
+    color: #e0e0e0;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.date-input:hover {
+    border-color: #777;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

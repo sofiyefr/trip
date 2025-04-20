@@ -15,9 +15,13 @@ def list():
 def show(id):
     route = Route.query.get(id)
     if not route: abort(404)
+    cities = City.query.all()
     checkpooints_stmt = select(Checkpoint).where(Checkpoint.route_id == route.id)
-    checkpoints = db.session.scalars(checkpooints_stmt)
-    return render_template('route.html.j2', route=route, cities=City.query.all(), checkpoints=checkpoints)
+    checkpoints = [checkpoint for checkpoint in db.session.scalars(checkpooints_stmt)]
+    for checkpoint in checkpoints:
+        checkpoint.city = City.query.get(checkpoint.city_id)
+    #checkpoints = db.session.scalars(checkpooints_stmt)
+    return render_template('route.html.j2', route=route, cities=cities, checkpoints=checkpoints)
 
 @route_bp.route("/route/add", methods=["POST", "GET"])
 def add():

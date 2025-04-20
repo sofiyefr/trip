@@ -1,7 +1,15 @@
 <html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/route.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css' rel='stylesheet' />
+</head>
 
 <body>
-    <h1>Route #{{route.id}}: {{route.name}}</h1>
+
+<div style="display: flex; height: 100vh;">
+  <!-- Left: Scrollable route content -->
+  <div style="flex: 3; overflow-y: scroll;">
+  <h1>Route #{{route.id}}: {{route.name}}</h1>
 
     <form action="/route/{{route.id}}/edit">
         <input type="text" name="name" value="{{route.name}}"><br>
@@ -9,25 +17,37 @@
         <input type="submit" value="Update">
     </form>
 
-    {% for checkpoint in checkpoints %}
-    <form action="/checkpoint/{{checkpoint.id}}/edit">
-        <select name="city_id">
-            {% for city in cities %}
-            {% if city.id==checkpoint.city_id %}
-            <option value="{{city.id}}" selected>{{city.name}}</option>
-            {% else %}
-            <option value="{{city.id}}">{{city.name}}</option>
-            {% endif %}
-            {% endfor %}
-        </select>
-        <input type="date" name="from_date" value="{{checkpoint.from_date}}">-
-        <input type="date" name="to_date" value="{{checkpoint.to_date}}"><br>
-        <input type="text" name="transport" value="{{checkpoint.transport}}"><br>
-        <textarea name="description">{{checkpoint.description}}</textarea><br>
-        <input type="submit" value="Update">
-        <a href="/checkpoint/{{checkpoint.id}}/delete">delete</a>
-    </form>
-    {% endfor %}
+    <div class="checkpoints">
+        {% for checkpoint in checkpoints %}
+        <div class="checkpoint">
+            <h2>{{checkpoint.from_date}}: {{checkpoint.city_name}}</h2>
+            <form action="/checkpoint/{{checkpoint.id}}/edit" class="checkpoint-form">
+                <label for="city_id_{{checkpoint.id}}">City:</label>
+                <select id="city_id_{{checkpoint.id}}" name="city_id">
+                    {% for city in cities %}
+                    <option value="{{city.id}}" {% if city.id == checkpoint.city_id %}selected{% endif %}>
+                        {{city.name}}
+                    </option>
+                    {% endfor %}
+                </select><br>
+
+                <label for="from_date_{{checkpoint.id}}" class="date-label">From:</label>
+                <input type="date" id="from_date_{{checkpoint.id}}" name="from_date" value="{{checkpoint.from_date}}" class="date-input">
+                <label for="to_date_{{checkpoint.id}}" class="date-label">To:</label>
+                <input type="date" id="to_date_{{checkpoint.id}}" name="to_date" value="{{checkpoint.to_date}}" class="date-input"><br>
+
+                <label for="transport_{{checkpoint.id}}">Transport:</label>
+                <input type="text" id="transport_{{checkpoint.id}}" name="transport" value="{{checkpoint.transport}}" class="transport-input"><br>
+
+                
+                <textarea id="description_{{checkpoint.id}}" name="description">{{checkpoint.description}}</textarea><br>
+
+                <input type="submit" value="Update">
+                <a href="/checkpoint/{{checkpoint.id}}/delete" class="delete-link">Delete</a>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
 
     <form action="/checkpoint/add">
         <input type="hidden" name="route_id" value="{{route.id}}">
@@ -56,6 +76,41 @@
         <a href="/">Home </a><br>
     </p>
 
+  </div>
+
+  <!-- Right: Fixed calendar -->
+  <div style="flex: 1; padding: 10px; background-color: #2b2b2b;">
+    <div id='calendar'></div>
+
+  </div>
+</div>
+    
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar'></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("Calendar script loaded");
+        var calendarEl = document.getElementById('calendar');
+        console.log("Calendar element found");
+        console.log(calendarEl);
+        const colors = ['#55a2a6', '#ff9f89', '#6bc2ff', '#d1a3ff', '#ffc857', '#91c788', '#f9844a'];
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+
+            events: [
+                {% for checkpoint in checkpoints %}
+                {
+                    title: '{{checkpoint.city.name}}',
+                    start: '{{checkpoint.from_date}}',
+                    end: '{{checkpoint.to_date}}',
+                    color: colors[{{ loop.index0 % 7 }}% length(colors)], // Use a different color for each event
+                },
+                {% endfor %}
+            ]
+        });
+        calendar.render();
+    });
+</script>
 </body>
 
 </html>
