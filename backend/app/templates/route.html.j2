@@ -10,18 +10,36 @@
     <div style="display: flex; height: 100vh;">
         <!-- Left: Scrollable route content -->
         <div style="flex: 3; overflow-y: scroll;">
-            <h1>Route #{{route.id}}: {{route.name}}</h1>
+            <div class="trip" id="trip_{{route.id}}">
+                <h1>{{route.name}}</h1>
+                <div class="description">{{route.description}}</div>
+                <a onclick="document.getElementById('edit_trip_{{route.id}}').style.display = 'block';
+                        document.getElementById('trip_{{route.id}}').style.display = 'none';">edit</a>
+            </div>
+            <div class="trip" id="edit_trip_{{route.id}}" style="display: none;">
+                <h1>Route #{{route.id}}: {{route.name}}</h1>
 
-            <form action="/route/{{route.id}}/edit">
-                <input type="text" name="name" value="{{route.name}}"><br>
-                <textarea name="description">{{route.description}}</textarea><br>
-                <input type="submit" value="Update">
-            </form>
+                <form action="/route/{{route.id}}/edit">
+                    <input type="text" name="name" value="{{route.name}}"><br>
+                    <textarea name="description">{{route.description}}</textarea><br>
+                    <input type="submit" value="Update">
+                </form>
+                <a onclick="document.getElementById('edit_trip_{{route.id}}').style.display = 'none';
+                        document.getElementById('trip_{{route.id}}').style.display = 'block';">cancel</a>
+            </div>
 
             <div class="checkpoints">
                 {% for checkpoint in checkpoints %}
-                <div class="checkpoint">
-                    <h2>{{checkpoint.from_date}}: {{checkpoint.city_name}}</h2>
+                <div class="checkpoint" id="checkpoint_{{checkpoint.id}}">
+                    <h2>{{checkpoint.from_date}}: {{checkpoint.city.name}}</h2>
+                    <div class="transport value">{{checkpoint.transport}}</div><br>
+                    <div class="description value">{{checkpoint.description}}</div><br>
+                    <a onclick="document.getElementById('edit_checkpoint_{{checkpoint.id}}').style.display = 'block';
+                        document.getElementById('checkpoint_{{checkpoint.id}}').style.display = 'none';">
+                        edit</a>
+                </div>
+                <div class="checkpoint" id="edit_checkpoint_{{checkpoint.id}}" style="display: none;">
+                    <h2>{{checkpoint.from_date}}: {{checkpoint.city.name}}</h2>
                     <form action="/checkpoint/{{checkpoint.id}}/edit" class="checkpoint-form">
                         <label for="city_id_{{checkpoint.id}}">City:</label>
                         <select id="city_id_{{checkpoint.id}}" name="city_id">
@@ -40,15 +58,19 @@
                             class="date-input"><br>
 
                         <label for="transport_{{checkpoint.id}}">Transport:</label>
-                        <input type="text" id="transport_{{checkpoint.id}}" name="transport"
-                            value="{{checkpoint.transport}}" class="transport-input"><br>
-
-
+                        <select name="transport" id="transport_{{checkpoint.id}}">
+                            <option value="">--select transport--</option>
+                            {% for transport in transports %}
+                            <option {% if transport==checkpoint.transport %} selected {%endif%}>{{transport}}</option>
+                            {% endfor %}
+                        </select><br>
                         <textarea id="description_{{checkpoint.id}}"
                             name="description">{{checkpoint.description}}</textarea><br>
 
                         <input type="submit" value="Update">
                         <a href="/checkpoint/{{checkpoint.id}}/delete" class="delete-link">Delete</a>
+                        <a onclick="document.getElementById('edit_checkpoint_{{checkpoint.id}}').style.display = 'none';
+                        document.getElementById('checkpoint_{{checkpoint.id}}').style.display = 'block';">Cancel</a>
                     </form>
                 </div>
                 {% endfor %}
@@ -65,11 +87,9 @@
                 <input type="date" name="date" value=""><br>
                 <select name="transport">
                     <option value="">--select transport--</option>
-                    <option>car</option>
-                    <option>bus</option>
-                    <option>plane</option>
-                    <option>train</option>
-                    <option>ship</option>
+                    {% for transport in transports %}
+                    <option>{{transport}}</option>
+                    {% endfor %}
                 </select>
                 <input type="hidden" name="description" value="">
                 <input type="submit" value="Add">

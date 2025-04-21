@@ -7,6 +7,16 @@ from app.extensions import db
 
 route_bp = Blueprint('routes', __name__)
 
+transports = [
+    "🚌 bus",
+    "🚆 train",
+    "🛫 plane",
+    "🚗 car",
+    "🚲 bike",
+    "🚕 taxi",
+    "🚢 ship"
+]
+
 @route_bp.route("/routes")
 def list():
     return render_template('routes.html.j2', routes=Route.query.all())
@@ -21,7 +31,7 @@ def show(id):
     for checkpoint in checkpoints:
         checkpoint.city = City.query.get(checkpoint.city_id)
     #checkpoints = db.session.scalars(checkpooints_stmt)
-    return render_template('route.html.j2', route=route, cities=cities, checkpoints=checkpoints)
+    return render_template('route.html.j2', route=route, cities=cities, checkpoints=checkpoints, transports=transports)
 
 @route_bp.route("/route/add", methods=["POST", "GET"])
 def add():
