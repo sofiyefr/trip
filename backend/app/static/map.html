@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Map</title>
+    <style>
+        /* Set the size of the map */
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h3>My Google Map</h3>
+    <div id="map"></div>
+
+    <!-- Replace YOUR_API_KEY with your actual API key -->
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBhHbQoNHUE97hsXJarKBCV1GjczPDIGU&callback=initMap">
+        </script>
+
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location for the center of the map
+            const center = { lat: 37.7749, lng: -122.4194 }; // San Francisco
+
+            // Create the map centered at the specified location
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 10,
+                center: center,
+            });
+
+            // Example pins (markers)
+            const locations = [
+                { lat: 37.7749, lng: -122.4194, title: "San Francisco" },
+                { lat: 37.8044, lng: -122.2711, title: "Oakland" },
+                { lat: 37.6879, lng: -122.4702, title: "Daly City" },
+            ];
+
+            // Add markers to the map
+            locations.forEach(loc => {
+                new google.maps.Marker({
+                    position: { lat: loc.lat, lng: loc.lng },
+                    map: map,
+                    title: loc.title,
+                });
+            });
+        }
+    </script>
+
+</body>
+
+</html>
