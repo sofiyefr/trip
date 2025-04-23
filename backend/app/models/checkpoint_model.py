@@ -5,6 +5,7 @@ class Checkpoint(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     route_id = db.Column(db.Integer)
+    index = db.Column(db.Integer)
     city_id = db.Column(db.Integer)
     from_date = db.Column(db.String(100))
     to_date = db.Column(db.String(100))

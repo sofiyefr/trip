@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/route.css">
+    <style>
+        #map { height: 100%; width: 100%;}
+    </style>
+</head>
+
+<body>
+    <div style="display: flex; height: 100vh;">
+        <!-- Left: Scrollable route content -->
+        <div style="flex: 1; overflow-y: scroll;">
+            <div class="trip" id="trip_{{route.id}}">
+                <h3>{{route.name}} ({{route.dist}} km)</h3>
+            </div>
+            <p>
+                <a href="/route/{{route.id}}/shuffle">Shuffle </a>  
+                <a href="/route/{{route.id}}/optimize">Optimize </a>   
+            </p>
+
+            <div class="checkpoints">
+                {% for checkpoint in checkpoints %}
+                <div id="checkpoint_{{checkpoint.id}}">
+                    {{checkpoint.city.name}}
+                </div> {{checkpoint.dist}} <br>
+                {% endfor %}
+            </div>
+
+            <p>
+                <a href="/routes">Routes </a> 
+                <a href="/">Home </a> 
+            <a href="/route/{{route.id}}/delete">Delete route</a>
+            </p>
+
+        </div>
+
+        <div style="flex: 3; padding: 10px; background-color: #2b2b2b;">
+            <div id="map" ></div>
+        </div>
+    </div>
+
+    <script>
+    </script>
+
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBhHbQoNHUE97hsXJarKBCV1GjczPDIGU&loading=async&callback=initMap">
+    </script>
+
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location for the center of the map
+            const center = { lat: 37.7749, lng: -122.4194 }; // San Francisco
+
+            // Create the map centered at the specified location
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 10,
+                center: {lat:49.84, lng:24.01 },
+            });
+
+        {% if checkpoints %}
+        const bounds = new google.maps.LatLngBounds();
+        const path = []; // Store the coordinates for the polyline
+
+        {% for checkpoint in checkpoints %}
+         marker = new google.maps.Marker({
+            position: {
+                lat: {{ checkpoint.city.latitude }},
+                lng: {{ checkpoint.city.longitude }} },
+                map: map,
+                title: "{{checkpoint.city.name}}",
+            });
+         path.push(marker.position); // Add the marker position to the path
+         bounds.extend(marker.position);
+        {% endfor %}
+
+        const line = new google.maps.Polyline({
+            path: path,
+            geodesic: true,
+            strokeColor: "blue",
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+        });
+
+        line.setMap(map);
+
+        map.fitBounds(bounds);
+        {%endif%}
+        }
+    </script>
+
+</body>
+
+</html>

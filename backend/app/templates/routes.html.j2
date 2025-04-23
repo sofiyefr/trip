@@ -7,7 +7,8 @@
         {% for route in routes %}
         <tr>
             <td>
-                <a href="/route/{{route.id}}">#{{route.id}}: {{route.name}}</a>
+                <a href="/route/{{route.id}}">#{{route.id}}: {{route.name}}</a> 
+                ( <a href="/salesman/{{route.id}}">salesman</a> )
             </td>
         </tr>
         {% endfor %}
@@ -24,7 +25,7 @@
         </tr>
     </table>
     <br>
-    <a href="/">Go back </a><br>
+    <a href="/">Go back </a>|<a href="/quick_route">add quick route</a><br>
 
 </body>
 

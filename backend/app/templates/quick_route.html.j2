@@ -1,0 +1,21 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/route.css">
+</head>
+
+<body>
+    <p>Select cities for your quick route</p>
+    <form action="/make_quick_route">
+        <input type="text" name="name" value="quick route"><br>
+        <select name="cities" size=40 multiple>
+            {% for city in cities %}
+            <option value="{{city.id}}">{{city.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Create">
+    </form>
+
+</body>
+
+</html>
