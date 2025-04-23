@@ -5,9 +5,7 @@ from app.routes.person import person_bp
 from app.routes.route import route_bp
 from app.routes.checkpoint import checkpoint_bp
 from flask_sqlalchemy import SQLAlchemy
-from app.extensions import db  
-# Initialize the database
-#db = SQLAlchemy()
+from app.extensions import db
 
 def create_app():
     app = Flask(__name__)
@@ -27,11 +25,13 @@ def create_app():
     # Create tables if they don't exist
     with app.app_context():
         # Import after init_app
-        from app.models.city_model import City  
+        from app.models.city_model import City, init_cities  
         from app.models.person_model import Person
         from app.models.route_model import Route
         from app.models.checkpoint_model import Checkpoint
         db.create_all()
+
+        init_cities()
         # Print the database URI to verify the connection
         print(f"Database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
     return app
