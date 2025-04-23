@@ -157,7 +157,7 @@
     </script>
 
     <script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBhHbQoNHUE97hsXJarKBCV1GjczPDIGU&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBhHbQoNHUE97hsXJarKBCV1GjczPDIGU&loading=async&callback=initMap">
         </script>
 
     <script>
@@ -169,12 +169,12 @@
             // Create the map centered at the specified location
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 10,
-                center: {
-                    lat: {{ checkpoints[0].city.latitude }},
-                    lng: {{ checkpoints[0].city.longitude }}
-                },
+                center: {lat:49.84, lng:24.01 },
             });
+
+        {% if checkpoints %}
         const bounds = new google.maps.LatLngBounds();
+        const path = []; // Store the coordinates for the polyline
 
         {% for checkpoint in checkpoints %}
          marker = new google.maps.Marker({
@@ -184,9 +184,22 @@
             map: map,
             title: "{{checkpoint.city.name}}",
                 });
+         path.push(marker.position); // Add the marker position to the path
          bounds.extend(marker.position);
         {% endfor %}
+
+        const line = new google.maps.Polyline({
+            path: path,
+            geodesic: true,
+            strokeColor: "blue",
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+        });
+
+        line.setMap(map);
+
         map.fitBounds(bounds);
+        {%endif%}
         }
     </script>
 
