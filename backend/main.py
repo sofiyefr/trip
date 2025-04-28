@@ -1,19 +1,6 @@
-from http.server import SimpleHTTPRequestHandler, HTTPServer
-import os
+from app import create_app
 
-# main.py
-
-def main():
-    print("Hello, World!")
-
-def run_server():
-    server_address = ('', 8000)
-    httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
-    print("Serving on port 8000...")
-    httpd.serve_forever()
+app = create_app()
 
 if __name__ == "__main__":
-    main()
-    run_server()
-    # Ensure the server serves files from the current directory
-    os.chdir('/Users/sofia/trip/back')
+    app.run(debug=True, host='0.0.0.0', port=5001)
